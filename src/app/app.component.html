@@ -1,0 +1,19 @@
+
+
+<form [formGroup]="dynamicForm">
+  @for (field of formConfig; track field.name) {
+    <!-- Use *ngIf to completely remove from the DOM -->
+    @if (field.visible) {
+      <div class="form-group">
+        <h2 *ngIf="field.type === 'header'">{{ field.label }}</h2>
+        <label *ngIf="field.type !== 'header'" [for]="field.name">{{ field.label }}</label>
+        <input *ngIf="field.type !== 'header'" [type]="field.type" [id]="field.name" [formControlName]="field.name" />
+      </div>
+    }
+    <!-- Alternatively, use the [hidden] property to just hide visually (element remains in DOM) -->
+    <!-- <div class="form-group" [hidden]="!field.visible">
+      <label [for]="field.name">{{ field.label }}</label>
+      <input [type]="field.type" [id]="field.name" [formControlName]="field.name" />
+    </div> -->
+  }
+</form>
