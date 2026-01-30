@@ -1,22 +1,22 @@
 [
 {
     "type": "header",
-    "label": "Personal information",
-    "name": "PersonalInformation",
+    "label": "Book information",
+    "name": "BookInformation",
     "required": true,
     "visible": true
   }, 
   {
     "type": "text",
-    "label": "Full Name",
-    "name": "fullName",
+    "label": "Name of the Book",
+    "name": "bookName",
     "required": true,
     "visible": true
   },
   {
     "type": "text",
-    "label": "Age",
-    "name": "age",
+    "label": "Author",
+    "name": "author",
     "required": false,
     "visible": true
   },

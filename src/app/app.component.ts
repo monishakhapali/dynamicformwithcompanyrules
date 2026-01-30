@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormConfigService } from './service/form-config.service';
 import { FormFieldConfig } from '../FormFieldConfig';
 import { debounceTime, distinctUntilChanged, of, Subscription, switchMap, tap } from 'rxjs';
-import { CompanyrulesService } from './service/companyrules.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +15,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   private subscription: Subscription = new Subscription();
   
-  constructor(private fb: FormBuilder, private apiService: FormConfigService, private companyRulesService: CompanyrulesService) {}
+  constructor(private fb: FormBuilder, private apiService: FormConfigService) {}
  
   ngOnInit(): void {
     this.fetchFormConfig();
@@ -42,29 +41,29 @@ export class AppComponent implements OnInit, OnDestroy {
       ];
     });
     this.dynamicForm = this.fb.group(formControls);
-    const headerfield = this.formConfig.find(field => field.name === 'PersonalInformation');
+    const headerfield = this.formConfig.find(field => field.name === 'BookInformation');
     if(headerfield && headerfield.visible) {
-    // Subscribe to fullName changes to control age visibility
-    const fullNameControl = this.dynamicForm.get('fullName');
-    if (fullNameControl) {
+    // Subscribe to fullName changes to control author visibility
+    const bookNameControl = this.dynamicForm.get('bookName');
+    if (bookNameControl) {
       this.subscription.add(
-        fullNameControl.valueChanges
+        bookNameControl.valueChanges
           .pipe(
             debounceTime(300),
             distinctUntilChanged()
           )
           .subscribe(value => {
-            this.updateAgeVisibility(value);
+            this.updateAuthorVisibility(value);
           })
       );
     }
   }
   }
-  //This will drive the company rule for age field visibility
-  updateAgeVisibility(fullName: string): void {
-    const ageField = this.formConfig.find(field => field.name === 'age');
-    if (ageField) {
-      ageField.visible = fullName !== 'Monisha';
+  //This will drive the company rule for author field visibility
+  updateAuthorVisibility(bookName: string): void {
+    const authorField = this.formConfig.find(field => field.name === 'author');
+    if (authorField) {
+      authorField.visible = bookName !== 'Monisha';
     }
   }
 
